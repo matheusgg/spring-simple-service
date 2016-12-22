@@ -1,0 +1,10 @@
+server:
+  port: 8082
+
+# https://github.com/Netflix/Hystrix/wiki/Configuration
+hystrix.command.generateMessage:
+  execution.isolation:
+    strategy: SEMAPHORE
+    semaphore.maxConcurrentRequests: 17000
+  fallback.isolation:
+    semaphore.maxConcurrentRequests: 1000

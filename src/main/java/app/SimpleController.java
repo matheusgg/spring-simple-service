@@ -1,7 +1,8 @@
 package app;
 
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import lombok.extern.slf4j.Slf4j;
+import static java.util.stream.Collectors.joining;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,8 +10,9 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import static java.util.stream.Collectors.joining;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
@@ -39,5 +41,15 @@ public class SimpleController {
 	@RequestMapping(value = "/file", method = POST)
 	public void receiveFile(@RequestPart("file") final MultipartFile file) {
 		log.info("File name: {} / Original name: {} / Size: {} / Content type: {}", file.getName(), file.getOriginalFilename(), file.getSize(), file.getContentType());
+	}
+
+	@RequestMapping(value = "/hi")
+	public String hi() {
+		return "Hi!";
+	}
+
+	@RequestMapping(value = "/simulate")
+	public String simulate() {
+		throw new RuntimeException("Simulation Exception");
 	}
 }
