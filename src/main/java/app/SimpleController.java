@@ -4,6 +4,7 @@ import static java.util.stream.Collectors.joining;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import org.springframework.http.HttpHeaders;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -12,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
+import app.model.UserRequest;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -50,6 +52,11 @@ public class SimpleController {
 
 	@RequestMapping(value = "/simulate")
 	public String simulate() {
-		throw new RuntimeException("Simulation Exception");
+		throw new RuntimeException("SimpleController Simulation Exception");
+	}
+
+	@RequestMapping(value = "/user", method = POST)
+	public String user(@RequestBody final UserRequest user) {
+		return user.toString();
 	}
 }
