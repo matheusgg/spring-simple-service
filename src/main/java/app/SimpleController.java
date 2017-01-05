@@ -13,12 +13,17 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
-import app.model.UserRequest;
+import app.model.User;
+import app.model.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 public class SimpleController {
+
+	private final UserRepository userRepository;
 
 	@RequestMapping(value = "/generateMessage")
 	@HystrixCommand(fallbackMethod = "generateDefaultMessage")
@@ -56,7 +61,7 @@ public class SimpleController {
 	}
 
 	@RequestMapping(value = "/user", method = POST)
-	public String user(@RequestBody final UserRequest user) {
-		return user.toString();
+	public User user(@RequestBody final User user) {
+		return this.userRepository.save(user);
 	}
 }

@@ -8,3 +8,9 @@ hystrix.command.generateMessage:
     semaphore.maxConcurrentRequests: 17000
   fallback.isolation:
     semaphore.maxConcurrentRequests: 1000
+
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
